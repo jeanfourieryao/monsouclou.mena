@@ -1,32 +1,40 @@
-{
+￼Enter file contents her{
   "name": "Mon Souclou — Gestion Scolaire Primaire",
   "short_name": "Mon Souclou",
-  "description": "Application de gestion des élèves et bulletins pour l'école primaire",
+  "description": "Application de gestion des élèves et bulletins pour l'école primaire. Du CP1 au CM2. Fonctionne sans internet.",
   "start_url": "./index.html",
+  "id": "./index.html",
   "display": "standalone",
   "background_color": "#0f4c81",
   "theme_color": "#0f4c81",
-  "orientation": "portrait",
+  "orientation": "portrait-primary",
   "lang": "fr",
-  "categories": [
-    "education",
-    "productivity"
-  ],
+  "scope": "./",
+  "categories": ["education", "productivity"],
   "icons": [
     {
-      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230f4c81'/%3E%3Ctext y='.9em' font-size='72' x='12'%3E🏫%3C/text%3E%3C/svg%3E",
-      "sizes": "512x512",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
-    }
-    {
-      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230f4c81'/%3E%3Ctext y='.9em' font-size='72' x='12'%3E🏫%3C/text%3E%3C/svg%3E",
+      "src": "icon-192.png",
       "sizes": "192x192",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
-  ],
-  "share_target": {
-    "method": "GET"
-  }
+  ]
 }

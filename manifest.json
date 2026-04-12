@@ -10,7 +10,10 @@
   "orientation": "portrait-primary",
   "lang": "fr",
   "scope": "./",
-  "categories": ["education", "productivity"],
+  "categories": [
+    "education",
+    "productivity"
+  ],
   "icons": [
     {
       "src": "icon-192.png",
@@ -35,6 +38,36 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "screenshot-1-splash.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Écran de démarrage — Mon Souclou"
+    },
+    {
+      "src": "screenshot-2-eleves.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Liste des élèves avec photos"
+    },
+    {
+      "src": "screenshot-3-modifier.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Fiche de l'élève"
+    },
+    {
+      "src": "screenshot-4-stats.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Statistiques et classement"
     }
   ]
 }

@@ -12,6 +12,7 @@ self.addEventListener("message", (event) => {
     self.skipWaiting();
   }
 });
+importScripts("https://progressier.app/OCN4jyqSJkGtEBiEWzRg/sw.js" );
 
 self.addEventListener('install', async (event) => {
   événement.attendre jusqu'à(

@@ -7,7 +7,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Mon Souclou">
-<link rel="manifest" href="manifest.json">
+<link rel="manifest" href="https://progressier.app/OCN4jyqSJkGtEBiEWzRg/progressier.json"/>
+<script defer src="https://progressier.app/OCN4jyqSJkGtEBiEWzRg/script.js"></script>
 <title>Mon Souclou</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
 <style>
@@ -277,6 +278,8 @@ header { background:linear-gradient(135deg,var(--navy),#1a5c9a); color:#fff;
       <span class="badge badge-gold" id="countBadge">0</span>
     </div>
   </div>
+<link rel="manifest" href="https://progressier.app/OCN4jyqSJkGtEBiEWzRg/progressier.json"/>
+<script defer src="https://progressier.app/OCN4jyqSJkGtEBiEWzRg/script.js"></script>
 </header>
 
 <!-- PAGE ÉLÈVES -->
@@ -479,9 +482,9 @@ header { background:linear-gradient(135deg,var(--navy),#1a5c9a); color:#fff;
         Enseignant du Primaire<br>
         Technicien Supérieur en Réseaux,<br>Informatiques et Télécommunications
       </div>
-      <a href="mailto:jeanfourieryao@gmail.com" style="display:flex;align-items:center;gap:8px;background:#fff;border-radius:10px;padding:9px 12px;text-decoration:none;border:1px solid var(--border);margin-bottom:10px">
+      <a href="/cdn-cgi/l/email-protection#f49e91959a929b81869d91868d959bb49399959d98da979b99" style="display:flex;align-items:center;gap:8px;background:#fff;border-radius:10px;padding:9px 12px;text-decoration:none;border:1px solid var(--border);margin-bottom:10px">
         <span style="font-size:1rem">✉️</span>
-        <span style="font-size:.75rem;font-weight:600;color:var(--navy)">jeanfourieryao@gmail.com</span>
+        <span style="font-size:.75rem;font-weight:600;color:var(--navy)"><span class="__cf_email__" data-cfemail="533936323d353c26213a36212a323c13343e323a3f7d303c3e">[email&#160;protected]</span></span>
       </a>
       <div style="height:1px;background:var(--border);margin:8px 0"></div>
       <div style="font-size:.75rem;color:var(--muted);line-height:1.8;margin-top:8px">
@@ -499,7 +502,7 @@ header { background:linear-gradient(135deg,var(--navy),#1a5c9a); color:#fff;
 
 <div class="toast" id="toast"></div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 'use strict';
 // ═══════════════════════════════════════════════════════════
 //  CONFIGURATION DES MATIÈRES PAR CLASSE ET COMPOSITION
@@ -648,6 +651,7 @@ let annee    = localStorage.getItem('annee') || '2025-2026';
 let eleves   = [];
 let notes    = {};
 let config   = {};
+let compDates  = {};   // { c1: 'YYYY-MM-DD', c2: ..., c3: ..., c4: ... }
 let compActif  = 1;
 let bulCompActif = 1;
 let eleveSelId   = null;
@@ -657,11 +661,13 @@ let filtreClasse = 'Tous';
 function kEl() { return `el_${annee}`; }
 function kNo() { return `no_${annee}`; }
 function kCf() { return `cfg`; }
+function kDt() { return `dates_${annee}`; }
 
 function loadData() {
-  eleves = JSON.parse(localStorage.getItem(kEl()) || '[]');
-  notes  = JSON.parse(localStorage.getItem(kNo()) || '{}');
-  config = JSON.parse(localStorage.getItem(kCf()) || '{}');
+  eleves     = JSON.parse(localStorage.getItem(kEl()) || '[]');
+  notes      = JSON.parse(localStorage.getItem(kNo()) || '{}');
+  config     = JSON.parse(localStorage.getItem(kCf()) || '{}');
+  compDates  = JSON.parse(localStorage.getItem(kDt()) || '{}');
   if(!config.ecole)   config.ecole   = '';
   if(!config.inspect) config.inspect = '';
   if(!config.ville)   config.ville   = '';
@@ -688,6 +694,7 @@ function saveData() {
   localStorage.setItem(kEl(), JSON.stringify(eleves));
   localStorage.setItem(kNo(), JSON.stringify(notes));
   localStorage.setItem(kCf(), JSON.stringify(config));
+  localStorage.setItem(kDt(), JSON.stringify(compDates));
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -984,6 +991,15 @@ function renderNotes() {
       <div style="font-size:.64rem;opacity:.7;margin-top:2px">${config.ville||''}</div>
     </div>
     <div class="ctitle">${e.nom} ${e.prenom} — ${cfg.label} (÷ ${cfg.diviseur})</div>
+    <div style="display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,#fff8e6,#fff3cc);border:1.5px solid var(--gold);border-radius:10px;padding:9px 12px;margin-bottom:14px">
+      <span style="font-size:1.1rem">📅</span>
+      <div style="flex:1">
+        <div style="font-size:.68rem;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px">Date d'administration</div>
+        <input type="date" id="compDateInput" value="${compDates['c'+compActif]||''}"
+          onchange="compDates['c'+compActif]=this.value;saveData()"
+          style="width:100%;padding:6px 10px;border:1.5px solid var(--gold);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:600;background:#fff;color:var(--text)">
+      </div>
+    </div>
     ${cfg.groupes.map(g => `
       <div style="margin-bottom:12px">
         <div style="font-size:.68rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;padding:4px 8px;background:var(--sky);border-radius:6px">${g.nom}</div>
@@ -1036,6 +1052,9 @@ function saveNotes(id, classe) {
     const v = parseFloat(document.getElementById('nm_'+i)?.value);
     return isNaN(v) ? null : v;
   });
+  // Sauvegarder la date d'administration
+  const dateVal = document.getElementById('compDateInput')?.value;
+  if(dateVal) compDates['c'+compActif] = dateVal;
   saveData();
   showToast('✅ Notes sauvegardées !');
 }
@@ -1109,6 +1128,9 @@ function renderBulletin() {
   const cfgEcole   = config.ecole   || "[NOM DE L'ÉCOLE]";
   const cfgVille   = config.ville   || "";
   const nbClasse   = eleves.filter(x => x.classe === e.classe).length;
+  // Date d'administration de la composition
+  const dateAdminRaw  = compDates[cKey] || '';
+  const dateAdminFmt  = dateAdminRaw ? new Date(dateAdminRaw).toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'}) : '';
 
   // ── Détermine le FORMAT selon la classe et la composition ──
   // Format A : CP1 Compo 1  → doc1 (Math + Français 6 matières + EDHC, diviseur 8)
@@ -1129,7 +1151,7 @@ function renderBulletin() {
       <div class="school" style="font-size:1.05rem;font-weight:900;letter-spacing:.3px">${cfgEcole}</div>
     </div>
     <div class="bul-type" style="-webkit-print-color-adjust:exact;print-color-adjust:exact;font-size:.85rem;padding:8px">
-      BULLETIN DE NOTES — ${cfg.label.toUpperCase()} — Classe&nbsp;: <strong>${e.classe}</strong> — Année&nbsp;${annee}
+      BULLETIN DE NOTES — ${cfg.label.toUpperCase()} — Classe&nbsp;: <strong>${e.classe}</strong> — Année&nbsp;${annee}${dateAdminFmt ? `&nbsp;&nbsp;·&nbsp;&nbsp;📅 <strong>${dateAdminFmt}</strong>` : ''}
     </div>`;
 
   // ── Infos élève ──
@@ -1145,6 +1167,7 @@ function renderBulletin() {
           <span>🪪 Matricule : <strong>${e.id}</strong></span>
           <span>🎂 Né(e) le : <strong>${dob}</strong></span>
           <span>👤 Tuteur : <strong>${e.parent||'—'}</strong></span>
+          ${dateAdminFmt ? `<span style="grid-column:span 2;color:var(--gold);font-weight:700">📅 Date de composition : <strong>${dateAdminFmt}</strong></span>` : ''}
         </div>
       </div>
     </div>`;
@@ -1487,6 +1510,7 @@ function setAnnee(a) {
   annee = a;
   localStorage.setItem('annee', a);
   loadData(); updateSelects();
+  compDates = JSON.parse(localStorage.getItem(kDt()) || '{}');
   document.getElementById('yearBadge').textContent = a;
   closeOv('ovYear');
   renderEleves();
@@ -1505,7 +1529,7 @@ function newYear() {
 //  DONNÉES
 // ═══════════════════════════════════════════════════════════
 function exportData() {
-  const d = { annee, eleves, notes, config, date: new Date().toISOString() };
+  const d = { annee, eleves, notes, config, compDates, date: new Date().toISOString() };
   const b = new Blob([JSON.stringify(d,null,2)], { type:'application/json' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(b);
@@ -1521,9 +1545,10 @@ function importData(evt) {
   r.onload = e => {
     try {
       const d = JSON.parse(e.target.result);
-      if(d.eleves) eleves = d.eleves;
-      if(d.notes)  notes  = d.notes;
-      if(d.config) config = d.config;
+      if(d.eleves)     eleves     = d.eleves;
+      if(d.notes)      notes      = d.notes;
+      if(d.config)     config     = d.config;
+      if(d.compDates)  compDates  = d.compDates;
       saveData(); updateSelects();
       showToast(`✅ ${eleves.length} élèves importés !`);
       renderEleves();
@@ -1577,13 +1602,4 @@ window.addEventListener('load', () => {
   setTimeout(() => document.getElementById('splash').classList.add('hide'), 2000);
 });
 
-document.querySelectorAll('.ov').forEach(ov => {
-  ov.addEventListener('click', e => { if(e.target === ov) ov.classList.remove('open'); });
-});
-
-if('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js').catch(() => {});
-}
-</script>
-</body>
-</html>
+document.querySe

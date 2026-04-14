@@ -17,7 +17,7 @@
 :root {
   --PAYS:        "CÔTE D'IVOIRE";
   --MINISTERE:   "Ministère de l'Éducation Nationale, de l'Alphabétisation et de l'Enseignement Technique";
-  --INSPECTION:  "INSPECTION DE L'ENSEIGNEMENT PRIMAIRE";
+  --INSPECTION:  "INSPECTION DE L'ENSEIGNEMENT PRIMAIRE ET PRÉSCOLAIRE";
   --ECOLE:       "[NOM DE L'ÉCOLE]";
   --VILLE:       "[Ville]";
   --ANNEE:       "2025-2026";
@@ -341,7 +341,7 @@ header { background:linear-gradient(135deg,var(--navy),#1a5c9a); color:#fff;
     </div>
     <div class="field"><label>Lieu de Naissance</label><input type="text" id="fLieu" placeholder="Abidjan"></div>
     <div class="field"><label>Parent / Tuteur</label><input type="text" id="fParent" placeholder="Nom du tuteur"></div>
-    <div class="field"><label>Téléphone</label><input type="tel" id="fTel" placeholder="+225 07 00 00 00 00"></div>
+    <div class="field"><label>Téléphone</label><input type="tel" id="fTel" placeholder="07 00 00 00 00"></div>
   </div>
   <button class="btn btn-green" onclick="saveEleve()">💾  Enregistrer l'élève</button>
   <button class="btn btn-ghost" onclick="resetForm()">🗑️  Vider le formulaire</button>
@@ -487,8 +487,8 @@ header { background:linear-gradient(135deg,var(--navy),#1a5c9a); color:#fff;
       </div>
       <div style="font-weight:800;font-size:.95rem;color:var(--navy);margin-bottom:2px;text-align:center">YAO KONAN JEAN-FOURIER</div>
       <div style="font-size:.75rem;color:var(--text);line-height:1.6;margin-bottom:10px;text-align:center">
-        Enseignant du Primaire<br>
-        Technicien Supérieur en Réseaux,<br>Informatiques et Télécommunications
+        Professeur d'École Primaire<br>
+        Technicien Supérieur en (RIT) Réseaux,<br>Informatiques et Télécommunications
       </div>
       <a href="/cdn-cgi/l/email-protection#f49e91959a929b81869d91868d959bb49399959d98da979b99" style="display:flex;align-items:center;gap:8px;background:#fff;border-radius:10px;padding:9px 12px;text-decoration:none;border:1px solid var(--border);margin-bottom:10px">
         <span style="font-size:1rem">✉️</span>
@@ -1132,7 +1132,7 @@ function renderBulletin() {
   const dob  = e.dob ? new Date(e.dob).toLocaleDateString('fr-FR') : '—';
   const hasPhoto = e.photo && e.photo.length > 0;
   const cfgPays    = config.pays    || "CÔTE D'IVOIRE";
-  const cfgInspect = config.inspect || "INSPECTION DE L'ENSEIGNEMENT PRIMAIRE";
+  const cfgInspect = config.inspect || "INSPECTION DE L'ENSEIGNEMENT PRIMAIRE ET PRÉSCOLAIRE";
   const cfgEcole   = config.ecole   || "[NOM DE L'ÉCOLE]";
   const cfgVille   = config.ville   || "";
   const nbClasse   = eleves.filter(x => x.classe === e.classe).length;

@@ -658,9 +658,17 @@ header {
 
 <!-- ══════════ PAGE FICHES PÉDAGOGIQUES ══════════ -->
 <div class="page" id="page-fiches">
-  <div class="info-box">
-    <span class="ic">📚</span>
-    <p>Fiches de cours par niveau — utilisables directement en classe. Appuyez sur une fiche pour l'ouvrir.</p>
+
+  <!-- Barre concepteur -->
+  <div style="background:linear-gradient(135deg,var(--navy),var(--teal));border-radius:var(--r);padding:14px 16px;margin-bottom:13px;color:#fff;display:flex;align-items:center;justify-content:space-between">
+    <div>
+      <div style="font-size:.62rem;opacity:.65;text-transform:uppercase;letter-spacing:.5px">Espace Concepteur</div>
+      <div style="font-family:var(--font-display);font-size:1rem;margin-top:2px">YAO KONAN JEAN-FOURIER</div>
+      <div style="font-size:.68rem;opacity:.7;margin-top:1px">📚 ${()=>fichesPerso.length + FICHES_DEFAULT.length} fiches disponibles</div>
+    </div>
+    <button onclick="openAddFiche()" style="background:rgba(255,255,255,.18);border:1.5px solid rgba(255,255,255,.3);color:#fff;padding:9px 14px;border-radius:10px;font-family:var(--font);font-size:.8rem;font-weight:700;cursor:pointer;flex-shrink:0">
+      ➕ Nouvelle fiche
+    </button>
   </div>
 
   <!-- Filtre par niveau -->
@@ -741,7 +749,83 @@ header {
   <div class="modal">
     <div class="mhandle"></div>
     <div id="ovFicheContent"></div>
+    <div class="g2" style="margin-top:10px" id="ovFicheActions"></div>
     <button class="btn btn-ghost" onclick="closeOv('ovFiche')" style="margin-top:6px">Fermer</button>
+  </div>
+</div>
+
+<!-- MODAL AJOUTER / ÉDITER FICHE -->
+<div class="ov" id="ovAddFiche">
+  <div class="modal">
+    <div class="mhandle"></div>
+    <div class="mtitle" id="addFicheTitre">✏️ Nouvelle Fiche</div>
+    <input type="hidden" id="ficheEditId">
+
+    <div class="frow">
+      <div class="field">
+        <label>Niveau *</label>
+        <select id="ficheNiveau">
+          <option value="CP1">CP1</option><option value="CP2">CP2</option>
+          <option value="CE1">CE1</option><option value="CE2">CE2</option>
+          <option value="CM1">CM1</option><option value="CM2">CM2</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Matière *</label>
+        <select id="ficheMatiere">
+          <option value="Mathématiques">➕ Mathématiques</option>
+          <option value="Français">📖 Français</option>
+          <option value="Éveil">🌍 Éveil au Milieu</option>
+          <option value="EDHC">🤝 EDHC</option>
+          <option value="Sport">⚽ Sport</option>
+          <option value="Arts">🎨 Arts</option>
+          <option value="Autre">📂 Autre</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field"><label>Titre de la fiche *</label><input type="text" id="ficheTitreInput" placeholder="Ex : Les nombres de 1 à 10"></div>
+    <div class="frow">
+      <div class="field"><label>Durée</label><input type="text" id="ficheDuree" placeholder="45 min"></div>
+      <div class="field"><label>Mots-clés</label><input type="text" id="ficheTags" placeholder="Ex: Maths, CP1"></div>
+    </div>
+    <div class="field"><label>Objectif pédagogique *</label><input type="text" id="ficheObjectif" placeholder="L'élève sera capable de…"></div>
+    <div class="field">
+      <label>Contenu / Plan de la leçon *</label>
+      <textarea id="ficheContenu" rows="6" placeholder="I. Introduction&#10;• Point 1&#10;• Point 2&#10;&#10;II. Développement&#10;• ...&#10;&#10;III. Exercices pratiques&#10;• ..." style="width:100%;padding:11px 13px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:var(--font);font-size:.84rem;background:var(--bg);color:var(--text);resize:vertical;line-height:1.6"></textarea>
+    </div>
+
+    <!-- Zone pièce jointe PDF/Word -->
+    <div style="background:var(--sky);border-radius:12px;padding:13px;margin-bottom:12px;border:1.5px dashed var(--blue)">
+      <div style="font-size:.72rem;font-weight:800;color:var(--navy);margin-bottom:6px;letter-spacing:.3px">📎 PIÈCE JOINTE (PDF ou Word)</div>
+      <div style="font-size:.75rem;color:var(--muted);margin-bottom:10px">Ajoutez un fichier PDF ou Word (.docx) à cette fiche. Les utilisateurs pourront le télécharger directement.</div>
+      <div id="ficheFilePreview" style="display:none;background:#fff;border-radius:9px;padding:10px 12px;margin-bottom:9px;display:none;align-items:center;gap:10px;border:1px solid var(--border)">
+        <span id="ficheFileIcon" style="font-size:1.5rem">📄</span>
+        <div style="flex:1;min-width:0">
+          <div id="ficheFileName" style="font-weight:700;font-size:.82rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"></div>
+          <div id="ficheFileSize" style="font-size:.68rem;color:var(--muted)"></div>
+        </div>
+        <button onclick="clearFicheFile()" style="background:none;border:none;font-size:1.1rem;cursor:pointer;color:var(--red)">✕</button>
+      </div>
+      <input type="file" id="ficheFileInput" accept=".pdf,.doc,.docx" style="display:none" onchange="loadFicheFile(event)">
+      <button onclick="document.getElementById('ficheFileInput').click()" class="btn btn-ghost btn-sm" style="margin:0">
+        📎 Choisir un fichier PDF ou Word
+      </button>
+    </div>
+
+    <button class="btn btn-green" onclick="saveFiche()">💾 Enregistrer la fiche</button>
+    <button class="btn btn-ghost" onclick="closeOv('ovAddFiche')">Annuler</button>
+  </div>
+</div>
+
+<!-- MODAL SUPPRIMER FICHE -->
+<div class="ov" id="ovDelFiche">
+  <div class="modal">
+    <div class="mhandle"></div>
+    <div class="mtitle">⚠️ Supprimer cette fiche ?</div>
+    <p style="font-size:.85rem;color:var(--muted);margin-bottom:16px" id="delFicheMsg"></p>
+    <button class="btn btn-red" onclick="confirmDeleteFiche()">Oui, supprimer</button>
+    <button class="btn btn-ghost" onclick="closeOv('ovDelFiche')">Annuler</button>
   </div>
 </div>
 
@@ -816,7 +900,7 @@ const CONFIGS = {
 // ══════════════════════════════════════════════════════════
 //  FICHES PÉDAGOGIQUES
 // ══════════════════════════════════════════════════════════
-const FICHES = [
+const FICHES_RAW = [
   // ── CP1 ──
   {id:'f01',niveau:'CP1',matiere:'Mathématiques',titre:'Les nombres de 1 à 10',duree:'45 min',objectif:'Reconnaître, lire et écrire les nombres de 1 à 10',contenu:`<b>I. Comptage et reconnaissance</b><br>• Compter les objets : doigts, cailloux, bâtonnets<br>• Associer le chiffre à la quantité<br>• Écrire les chiffres de 1 à 10<br><br><b>II. Comparaison</b><br>• Plus grand que, plus petit que, égal<br>• Ranger des collections du plus petit au plus grand<br><br><b>III. Exercices pratiques</b><br>• Remplir des cases vides : 3, __, 5, __, 7<br>• Dessiner autant de ronds que le nombre indiqué<br>• Jeu des cartes chiffres`,tags:['Numération','CP1','Maths'],couleur:'mat-math'},
   {id:'f02',niveau:'CP1',matiere:'Mathématiques',titre:'Addition simple (résultat ≤ 10)',duree:'45 min',objectif:'Effectuer des additions simples avec résultat ≤ 10',contenu:`<b>I. Introduction au signe +</b><br>• Signification : mettre ensemble, ajouter<br>• Exemples concrets : 2 mangues + 3 mangues = ?<br><br><b>II. Technique de calcul</b><br>• Utilisation des doigts<br>• Dessins et représentations<br>• Tables d'addition de 1 à 5<br><br><b>III. Exercices</b><br>• 1+2=__ , 3+4=__ , 2+2=__<br>• Problèmes simples avec images`,tags:['Opérations','CP1','Maths'],couleur:'mat-math'},
@@ -848,86 +932,293 @@ const FICHES = [
   {id:'f18',niveau:'CM2',matiere:'EDHC',titre:'La citoyenneté et les droits de l\'enfant',duree:'45 min',objectif:'Comprendre ses droits et devoirs en tant que citoyen',contenu:`<b>I. Les droits de l'enfant</b><br>• Droit à l'éducation<br>• Droit à la santé<br>• Droit à la protection<br>• Droit à jouer et se développer<br><br><b>II. Les devoirs de l'enfant</b><br>• Respecter les règles de l'école<br>• Aider à la maison<br>• Respecter l'environnement<br><br><b>III. Être un bon citoyen</b><br>• Voter (adultes), payer ses impôts<br>• Respecter les lois<br>• Participer à la vie communautaire<br><br><b>IV. Discussion</b><br>• Comment puis-je être un bon citoyen aujourd'hui ?`,tags:['Citoyenneté','Droits','CM2','EDHC'],couleur:'mat-edhc'},
 ];
 
+// Fiches personnalisées (sauvegardées par le concepteur)
+let fichesPerso = JSON.parse(localStorage.getItem('fichesPerso') || '[]');
 let ficheFiltreNiveau = 'Tous';
 let ficheFiltreMatiere = 'Toutes';
+let ficheDelId = null;
+let ficheFileData = null; // { name, size, type, data (base64) }
+
+function getAllFiches() {
+  return [...FICHES_DEFAULT, ...fichesPerso];
+}
+
+// Renommer FICHES en FICHES_DEFAULT
+const FICHES_DEFAULT = FICHES_RAW;
+
+function matIcon(m) {
+  return m==='Mathématiques'?'➕':m==='Français'?'📖':m==='Éveil'?'🌍':m==='EDHC'?'🤝':m==='Sport'?'⚽':'🎨';
+}
+function matCouleur(m) {
+  return m==='Mathématiques'?'mat-math':m==='Français'?'mat-fr':m==='Éveil'?'mat-eveil':m==='EDHC'?'mat-edhc':m==='Sport'?'mat-sport':'mat-art';
+}
+const NIV_COLORS = {CP1:'#1a3a5c',CP2:'#0d7a72',CE1:'#2563a8',CE2:'#7c3aed',CM1:'#ea580c',CM2:'#16a34a'};
 
 function setFicheFilter(n) {
   ficheFiltreNiveau = n;
   document.querySelectorAll('#ficheFilter .cpill').forEach(p => {
-    p.classList.toggle('active', p.textContent.trim() === n || (n === 'Tous' && p.textContent.trim() === 'Tous'));
+    p.classList.toggle('active', p.textContent.trim() === n || (n==='Tous' && p.textContent.trim()==='Tous'));
   });
   renderFiches();
 }
 function setFicheMat(m) {
   ficheFiltreMatiere = m;
   document.querySelectorAll('#ficheMatFilter .cpill').forEach(p => {
-    const t = p.textContent.replace(/^[^ ]+ /,'').trim();
-    p.classList.toggle('active', p.textContent.trim().includes(m) || m === 'Toutes');
+    p.classList.toggle('active', p.textContent.trim().includes(m) || m==='Toutes');
   });
   renderFiches();
 }
 
 function renderFiches() {
-  let list = FICHES.filter(f => {
-    const nOk = ficheFiltreNiveau === 'Tous' || f.niveau === ficheFiltreNiveau;
-    const mOk = ficheFiltreMatiere === 'Toutes' || f.matiere.includes(ficheFiltreMatiere) || f.tags.some(t => t.includes(ficheFiltreMatiere));
+  const all = getAllFiches();
+  let list = all.filter(f => {
+    const nOk = ficheFiltreNiveau==='Tous' || f.niveau===ficheFiltreNiveau;
+    const mOk = ficheFiltreMatiere==='Toutes' || f.matiere.includes(ficheFiltreMatiere) || (f.tags||[]).some(t=>t.includes(ficheFiltreMatiere));
     return nOk && mOk;
   });
 
   const cont = document.getElementById('fichesContent');
   if(!list.length) {
-    cont.innerHTML = `<div class="empty"><div class="ei">📂</div><div class="et">Aucune fiche trouvée</div><div class="ep">Modifiez les filtres</div></div>`;
+    cont.innerHTML = `<div class="empty"><div class="ei">📂</div><div class="et">Aucune fiche trouvée</div><div class="ep">Modifiez les filtres ou ajoutez une nouvelle fiche</div></div>`;
     return;
   }
 
-  // Grouper par niveau
   const niveaux = ['CP1','CP2','CE1','CE2','CM1','CM2'];
-  const niveauxActifs = niveaux.filter(n => list.some(f => f.niveau === n));
+  const niveauxActifs = niveaux.filter(n => list.some(f => f.niveau===n));
 
   cont.innerHTML = niveauxActifs.map(niv => {
-    const fiches = list.filter(f => f.niveau === niv);
-    const colors = {CP1:'#1a3a5c',CP2:'#0d7a72',CE1:'#2563a8',CE2:'#7c3aed',CM1:'#ea580c',CM2:'#16a34a'};
+    const fiches = list.filter(f => f.niveau===niv);
+    const c = NIV_COLORS[niv];
     return `<div class="niveau-section">
-      <div class="niveau-pill" style="background:linear-gradient(135deg,${colors[niv]},${colors[niv]}cc)">
+      <div class="niveau-pill" style="background:linear-gradient(135deg,${c},${c}cc)">
         🏫 Classe ${niv} <span style="opacity:.7;font-size:.68rem">(${fiches.length} fiche${fiches.length>1?'s':''})</span>
       </div>
-      ${fiches.map(f => `
-        <div class="fiche-card" onclick="openFiche('${f.id}')">
+      ${fiches.map(f => {
+        const isPerso = !!fichesPerso.find(p=>p.id===f.id);
+        return `<div class="fiche-card" onclick="openFiche('${f.id}')">
           <div class="fiche-header">
-            <div class="fiche-icon ${f.couleur}">${f.matiere==='Mathématiques'?'➕':f.matiere==='Français'?'📖':f.matiere==='Éveil'?'🌍':f.matiere==='EDHC'?'🤝':f.matiere==='Sport'?'⚽':'🎨'}</div>
+            <div class="fiche-icon ${f.couleur||matCouleur(f.matiere)}">${matIcon(f.matiere)}</div>
             <div class="fiche-meta">
               <div class="fiche-title">${f.titre}</div>
-              <div class="fiche-sub">📚 ${f.matiere} · ⏱ ${f.duree}</div>
+              <div class="fiche-sub">📚 ${f.matiere} · ⏱ ${f.duree||'—'}${f.fichier?` · <span style="color:var(--green);font-weight:700">📎 Fichier joint</span>`:''}</div>
             </div>
-            <span class="fiche-badge" style="background:${colors[niv]}22;color:${colors[niv]}">${f.niveau}</span>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0">
+              <span class="fiche-badge" style="background:${c}22;color:${c}">${f.niveau}</span>
+              ${isPerso?`<span style="font-size:.58rem;background:#dcfce7;color:#166534;font-weight:700;padding:2px 7px;border-radius:20px">✏️ Perso</span>`:''}
+            </div>
           </div>
-        </div>`).join('')}
+        </div>`;
+      }).join('')}
     </div>`;
   }).join('');
 }
 
 function openFiche(id) {
-  const f = FICHES.find(x => x.id === id);
+  const f = getAllFiches().find(x=>x.id===id);
   if(!f) return;
-  const colors = {CP1:'#1a3a5c',CP2:'#0d7a72',CE1:'#2563a8',CE2:'#7c3aed',CM1:'#ea580c',CM2:'#16a34a'};
-  const c = colors[f.niveau];
+  const c = NIV_COLORS[f.niveau]||'#1a3a5c';
+  const isPerso = !!fichesPerso.find(p=>p.id===id);
+  const contenuHtml = (f.contenu||'').replace(/\n/g,'<br>');
+
   document.getElementById('ovFicheContent').innerHTML = `
-    <div style="background:linear-gradient(135deg,${c},${c}cc);border-radius:14px;padding:14px;margin-bottom:14px;color:#fff">
-      <div style="font-size:.65rem;opacity:.7;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">${f.niveau} · ${f.matiere} · ⏱ ${f.duree}</div>
+    <div style="background:linear-gradient(135deg,${c},${c}dd);border-radius:14px;padding:15px;margin-bottom:14px;color:#fff">
+      <div style="font-size:.63rem;opacity:.7;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">${f.niveau} · ${f.matiere}${f.duree?' · ⏱ '+f.duree:''}</div>
       <div style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;line-height:1.3">${f.titre}</div>
-      <div style="font-size:.78rem;opacity:.85;margin-top:6px;line-height:1.4">🎯 ${f.objectif}</div>
+      <div style="font-size:.78rem;opacity:.85;margin-top:6px;line-height:1.4">🎯 ${f.objectif||''}</div>
     </div>
     <div style="background:#f8fafc;border-radius:12px;padding:14px;margin-bottom:12px;font-size:.83rem;line-height:1.8;color:#1e293b;border:1px solid var(--border)">
-      ${f.contenu}
+      ${contenuHtml}
     </div>
-    <div class="fiche-tag-row">
-      ${f.tags.map(t => `<span class="fiche-tag">${t}</span>`).join('')}
-    </div>
-    <div style="margin-top:14px;padding:12px;background:var(--sky);border-radius:12px;font-size:.79rem;color:var(--navy);line-height:1.5">
-      💡 <strong>Conseil pédagogique :</strong> Commencez par les activités orales avant d'écrire. Impliquez tous les élèves à travers des questions ouvertes.
+    ${f.tags&&f.tags.length?`<div class="fiche-tag-row">${f.tags.map(t=>`<span class="fiche-tag">${t}</span>`).join('')}</div>`:''}
+    ${f.fichier?`
+    <div style="margin-top:12px;background:linear-gradient(135deg,#dcfce7,#d1fae5);border-radius:12px;padding:13px;border:1.5px solid #16a34a">
+      <div style="font-size:.68rem;font-weight:800;color:#166534;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">📎 FICHIER JOINT</div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <span style="font-size:2rem">${f.fichier.type&&f.fichier.type.includes('pdf')?'📄':'📝'}</span>
+        <div style="flex:1;min-width:0">
+          <div style="font-weight:700;font-size:.85rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${f.fichier.name}</div>
+          <div style="font-size:.7rem;color:#166534">${f.fichier.size}</div>
+        </div>
+        <button onclick="downloadFichier('${id}')" style="background:#16a34a;color:#fff;border:none;border-radius:9px;padding:9px 13px;font-family:var(--font);font-size:.78rem;font-weight:700;cursor:pointer;flex-shrink:0">
+          ⬇️ Télécharger
+        </button>
+      </div>
+    </div>`:''}
+    <div style="margin-top:12px;padding:12px;background:var(--sky);border-radius:12px;font-size:.79rem;color:var(--navy);line-height:1.5">
+      💡 <strong>Conseil :</strong> Commencez par les activités orales. Impliquez tous les élèves via des questions ouvertes.
     </div>`;
+
+  // Boutons d'action selon type de fiche
+  document.getElementById('ovFicheActions').innerHTML = isPerso
+    ? `<button class="btn btn-blue btn-sm" onclick="editFiche('${id}')">✏️ Modifier</button>
+       <button class="btn btn-red btn-sm" onclick="askDeleteFiche('${id}')">🗑️ Supprimer</button>`
+    : `<button class="btn btn-ghost btn-sm" style="grid-column:span 2;margin:0" onclick="duplicateFiche('${id}')">📋 Dupliquer et personnaliser</button>`;
+
   openOv('ovFiche');
 }
+
+function downloadFichier(id) {
+  const f = getAllFiches().find(x=>x.id===id);
+  if(!f||!f.fichier||!f.fichier.data) return;
+  const a = document.createElement('a');
+  a.href = f.fichier.data;
+  a.download = f.fichier.name;
+  a.click();
+  showToast('⬇️ Téléchargement démarré !');
+}
+
+// ── Formulaire ajout / édition ──
+function openAddFiche() {
+  document.getElementById('ficheEditId').value = '';
+  document.getElementById('addFicheTitre').textContent = '✏️ Nouvelle Fiche';
+  document.getElementById('ficheTitreInput').value = '';
+  document.getElementById('ficheNiveau').value = 'CP1';
+  document.getElementById('ficheMatiere').value = 'Mathématiques';
+  document.getElementById('ficheDuree').value = '';
+  document.getElementById('ficheObjectif').value = '';
+  document.getElementById('ficheContenu').value = '';
+  document.getElementById('ficheTags').value = '';
+  ficheFileData = null;
+  updateFicheFilePreview();
+  openOv('ovAddFiche');
+}
+
+function editFiche(id) {
+  const f = fichesPerso.find(x=>x.id===id);
+  if(!f) return;
+  closeOv('ovFiche');
+  document.getElementById('ficheEditId').value = id;
+  document.getElementById('addFicheTitre').textContent = '✏️ Modifier la Fiche';
+  document.getElementById('ficheTitreInput').value = f.titre||'';
+  document.getElementById('ficheNiveau').value = f.niveau||'CP1';
+  document.getElementById('ficheMatiere').value = f.matiere||'Mathématiques';
+  document.getElementById('ficheDuree').value = f.duree||'';
+  document.getElementById('ficheObjectif').value = f.objectif||'';
+  document.getElementById('ficheContenu').value = (f.contenu||'').replace(/<br>/g,'\n').replace(/<[^>]+>/g,'');
+  document.getElementById('ficheTags').value = (f.tags||[]).join(', ');
+  ficheFileData = f.fichier || null;
+  updateFicheFilePreview();
+  openOv('ovAddFiche');
+}
+
+function duplicateFiche(id) {
+  const f = getAllFiches().find(x=>x.id===id);
+  if(!f) return;
+  closeOv('ovFiche');
+  document.getElementById('ficheEditId').value = '';
+  document.getElementById('addFicheTitre').textContent = '📋 Dupliquer la Fiche';
+  document.getElementById('ficheTitreInput').value = f.titre + ' (copie)';
+  document.getElementById('ficheNiveau').value = f.niveau||'CP1';
+  document.getElementById('ficheMatiere').value = f.matiere||'Mathématiques';
+  document.getElementById('ficheDuree').value = f.duree||'';
+  document.getElementById('ficheObjectif').value = f.objectif||'';
+  document.getElementById('ficheContenu').value = (f.contenu||'').replace(/<br>/g,'\n').replace(/<[^>]+>/g,'');
+  document.getElementById('ficheTags').value = (f.tags||[]).join(', ');
+  ficheFileData = f.fichier || null;
+  updateFicheFilePreview();
+  openOv('ovAddFiche');
+}
+
+function saveFiche() {
+  const titre = document.getElementById('ficheTitreInput').value.trim();
+  const objectif = document.getElementById('ficheObjectif').value.trim();
+  const contenu = document.getElementById('ficheContenu').value.trim();
+  if(!titre||!objectif||!contenu) { showToast('⚠️ Titre, Objectif et Contenu obligatoires','#dc2626'); return; }
+
+  const contenuHtml = contenu.replace(/\n/g,'<br>');
+  const tags = document.getElementById('ficheTags').value.split(',').map(t=>t.trim()).filter(Boolean);
+  const niveau = document.getElementById('ficheNiveau').value;
+  const matiere = document.getElementById('ficheMatiere').value;
+
+  const obj = {
+    id: document.getElementById('ficheEditId').value || 'p_'+Date.now(),
+    titre, niveau, matiere,
+    duree: document.getElementById('ficheDuree').value.trim(),
+    objectif, contenu: contenuHtml,
+    tags: tags.length ? tags : [niveau, matiere],
+    couleur: matCouleur(matiere),
+    fichier: ficheFileData || null,
+    dateAjout: new Date().toLocaleDateString('fr-FR')
+  };
+
+  const editId = document.getElementById('ficheEditId').value;
+  if(editId) {
+    const idx = fichesPerso.findIndex(f=>f.id===editId);
+    if(idx>=0) fichesPerso[idx]=obj; else fichesPerso.push(obj);
+    showToast('✅ Fiche modifiée !');
+  } else {
+    fichesPerso.push(obj);
+    showToast('✅ Fiche ajoutée !');
+  }
+  localStorage.setItem('fichesPerso', JSON.stringify(fichesPerso));
+  closeOv('ovAddFiche');
+  renderFiches();
+}
+
+function askDeleteFiche(id) {
+  ficheDelId = id;
+  const f = fichesPerso.find(x=>x.id===id);
+  document.getElementById('delFicheMsg').textContent = f ? `Supprimer "${f.titre}" ? Cette action est irréversible.` : '';
+  closeOv('ovFiche');
+  openOv('ovDelFiche');
+}
+
+function confirmDeleteFiche() {
+  fichesPerso = fichesPerso.filter(f=>f.id!==ficheDelId);
+  localStorage.setItem('fichesPerso', JSON.stringify(fichesPerso));
+  closeOv('ovDelFiche');
+  showToast('🗑️ Fiche supprimée');
+  renderFiches();
+}
+
+// ── Gestion fichier PDF/Word ──
+function loadFicheFile(evt) {
+  const file = evt.target.files[0];
+  if(!file) return;
+  const maxSize = 5 * 1024 * 1024; // 5 MB
+  if(file.size > maxSize) { showToast('⚠️ Fichier trop lourd (max 5 MB)','#dc2626'); return; }
+  const reader = new FileReader();
+  reader.onload = e => {
+    ficheFileData = {
+      name: file.name,
+      size: formatFileSize(file.size),
+      type: file.type,
+      data: e.target.result
+    };
+    updateFicheFilePreview();
+    showToast('✅ Fichier chargé : ' + file.name);
+  };
+  reader.readAsDataURL(file);
+}
+
+function clearFicheFile() {
+  ficheFileData = null;
+  document.getElementById('ficheFileInput').value = '';
+  updateFicheFilePreview();
+}
+
+function updateFicheFilePreview() {
+  const prev = document.getElementById('ficheFilePreview');
+  if(!prev) return;
+  if(ficheFileData) {
+    prev.style.display = 'flex';
+    document.getElementById('ficheFileIcon').textContent = ficheFileData.type&&ficheFileData.type.includes('pdf') ? '📄' : '📝';
+    document.getElementById('ficheName') && (document.getElementById('ficheName').textContent = ficheFileData.name);
+    document.getElementById('ficheFileName').textContent = ficheFileData.name;
+    document.getElementById('ficheFileSize').textContent = ficheFileData.size;
+  } else {
+    prev.style.display = 'none';
+  }
+}
+
+function formatFileSize(bytes) {
+  if(bytes < 1024) return bytes + ' o';
+  if(bytes < 1024*1024) return (bytes/1024).toFixed(1) + ' Ko';
+  return (bytes/(1024*1024)).toFixed(1) + ' Mo';
+}
+
+// Rendre le bouton "Nouvelle fiche" fonctionnel — déjà géré inline
+
 
 // ══════════════════════════════════════════════════════════
 //  STATE
@@ -1605,6 +1896,7 @@ function showToast(msg,bg='#1a3a5c'){
 //  INIT
 // ══════════════════════════════════════════════════════════
 window.addEventListener('load',()=>{
+  fichesPerso = JSON.parse(localStorage.getItem('fichesPerso') || '[]');
   loadData();updateSelects();resetForm();renderEleves();renderClasFilter();renderFiches();
   document.getElementById('yearBadge').textContent=annee;
   updateHero();

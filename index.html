@@ -561,7 +561,7 @@ header {
     <div class="frow">
       <div class="field">
         <label>Sexe</label>
-        <select id="fSexe"><option value="M">♂ Masculin</option><option value="F">♀ Féminin</option></select>
+        <select id="fSexe"><option value="M">Masculin</option><option value="F">Féminin</option></select>
       </div>
       <div class="field"><label>Date de Naissance</label><input type="date" id="fDob"></div>
     </div>
@@ -627,22 +627,22 @@ header {
     <div class="scard"><div class="sv" id="stInsuf" style="color:var(--red)">—</div><div class="sl">Insuffisant</div></div>
   </div>
   <div class="card">
-    <div class="ctitle">📊 Composition analysée</div>
+    <div class="ctitle">Composition analysée</div>
     <div class="comp-tabs" id="statsCompTabs">
       <div class="ctab active" onclick="setStatsComp(1)">Compo. 1</div>
       <div class="ctab" onclick="setStatsComp(2)">Compo. 2</div>
       <div class="ctab" onclick="setStatsComp(3)">Compo. 3</div>
-      <div class="ctab" onclick="setStatsComp(4)" style="border-color:var(--orange);color:var(--orange)">🎓 Passage</div>
+      <div class="ctab" onclick="setStatsComp(4)" style="border-color:var(--orange);color:var(--orange)">Passage</div>
     </div>
   </div>
   <div class="card">
-    <div class="ctitle" id="classementTitle">🏆 Classement — 1ère Composition</div>
+    <div class="ctitle" id="classementTitle">Classement — 1ère Composition</div>
     <div id="classement"></div>
   </div>
   <div class="card">
     <div class="ctitle">⚙️ Paramètres École</div>
     <div class="field"><label>Nom de l'École</label><input type="text" id="setEcole" placeholder="École Primaire Publique…"></div>
-    <div class="field"><label>Inspection</label><input type="text" id="setInspect" placeholder="IEP de…"></div>
+    <div class="field"><label>Inspection</label><input type="text" id="setInspect" placeholder="IEPP de…"></div>
     <div class="field"><label>Ville</label><input type="text" id="setVille" placeholder="Abidjan, Yamoussoukro…"></div>
     <div class="field"><label>Pays</label><input type="text" id="setPays" placeholder="CÔTE D'IVOIRE"></div>
     <button class="btn btn-navy" onclick="saveConfig()">💾 Sauvegarder</button>
@@ -685,10 +685,10 @@ header {
   <!-- Filtre par matière -->
   <div class="classe-filter" id="ficheMatFilter">
     <div class="cpill active" onclick="setFicheMat('Toutes')">Toutes matières</div>
-    <div class="cpill" onclick="setFicheMat('Mathématiques')">➕ Maths</div>
-    <div class="cpill" onclick="setFicheMat('Français')">📖 Français</div>
-    <div class="cpill" onclick="setFicheMat('Éveil')">🌍 Éveil</div>
-    <div class="cpill" onclick="setFicheMat('EDHC')">🤝 EDHC</div>
+    <div class="cpill" onclick="setFicheMat('Mathématiques')">Maths</div>
+    <div class="cpill" onclick="setFicheMat('Français')">Français</div>
+    <div class="cpill" onclick="setFicheMat('Éveil')">Éveil</div>
+    <div class="cpill" onclick="setFicheMat('EDHC')">EDHC</div>
   </div>
 
   <div id="fichesContent"></div>
@@ -773,13 +773,16 @@ header {
       <div class="field">
         <label>Matière *</label>
         <select id="ficheMatiere">
-          <option value="Mathématiques">➕ Mathématiques</option>
-          <option value="Français">📖 Français</option>
-          <option value="Éveil">🌍 Éveil au Milieu</option>
-          <option value="EDHC">🤝 EDHC</option>
-          <option value="Sport">⚽ Sport</option>
-          <option value="Arts">🎨 Arts</option>
-          <option value="Autre">📂 Autre</option>
+         <option value="Mathématiques">Mathématiques</option>
+         <option value="Lecture">Lecture</option>
+         <option value="Exploitation de texte 1">Exploitation de texte 1</option>
+         <option value="Exploitation de texte 2">Exploitation de texte 2</option>
+         <option value="EDHC">EDHC</option>
+         <option value="EPS">EPS</option>
+         <option value="Histoire et Géographie">Histoire et Géographie</option>
+         <option value="Expression orale">Expression orale</option>
+         <option value="Expression écrite">Expression écrite</option>
+         <option value="Sciences">Sciences</option>
         </select>
       </div>
     </div>
@@ -837,23 +840,15 @@ header {
     <div style="text-align:center;margin-bottom:14px">
       <div style="width:70px;height:70px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--teal));display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto 10px;box-shadow:0 4px 16px rgba(26,58,92,.3)">🏫</div>
       <div style="font-family:var(--font-display);font-size:1.3rem;color:var(--navy);font-weight:900">Mon Souclou</div>
-      <div style="font-size:.72rem;color:var(--muted);margin-top:2px">Application de Gestion Scolaire v2.0</div>
+      <div style="font-size:.72rem;color:var(--muted);margin-top:2px">Application de Gestion Scolaire</div>
     </div>
-    <div style="background:var(--sky);border-radius:14px;padding:16px;margin-bottom:12px">
-      <div style="font-size:.62rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:12px;text-align:center">Concepteur</div>
-      <div id="gravatarFallback" style="width:80px;height:80px;border-radius:50%;background:var(--navy);color:#fff;font-size:1.6rem;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;border:3px solid var(--border)">YJ</div>
-      <div style="font-weight:800;font-size:.95rem;color:var(--navy);margin-bottom:2px;text-align:center">YAO KONAN JEAN-FOURIER</div>
-      <div style="font-size:.75rem;color:var(--text);line-height:1.6;margin-bottom:10px;text-align:center">
-        Professeur d'École Primaire<br>
-        Technicien Supérieur en RIT<br>(Réseaux, Informatique & Télécommunications)
-      </div>
       <div style="display:flex;align-items:center;gap:8px;background:#fff;border-radius:10px;padding:9px 12px;border:1px solid var(--border);margin-bottom:10px">
         <span style="font-size:1rem">✉️</span>
         <span style="font-size:.75rem;font-weight:700;color:var(--navy)">jeanfourieryao@gmail.com</span>
       </div>
       <div style="font-size:.75rem;color:var(--muted);line-height:1.8;margin-top:8px">
         <div>🏛️ <strong>IEPP RAVIART</strong></div>
-        <div>📍 DRENA DE YAMOUSSOUKRO</div>
+        <div>📍 DRENAET DE YAMOUSSOUKRO</div>
       </div>
     </div>
     <div style="background:#f7faff;border-radius:12px;padding:10px;text-align:center;margin-bottom:12px;border:1px solid var(--border)">
@@ -1236,19 +1231,19 @@ function loadData() {
       {id:'2026001',nom:"N'GUESSAN",prenom:'KOFFI FULGENCE',sexe:'M',dob:'2019-03-10',lieu:'Abidjan',classe:'CP1',parent:"N'Guessan Konan",tel:'+225 07 11 22 33',photo:''},
       {id:'2026002',nom:'YAO',prenom:'AMOIN RITA',sexe:'F',dob:'2019-05-22',lieu:'Divo',classe:'CP1',parent:'Yao Ahou',tel:'+225 07 22 33 44',photo:''},
       {id:'2026003',nom:'KOUAKOU',prenom:'JEAN-MARC',sexe:'M',dob:'2019-07-14',lieu:'Bouaké',classe:'CP1',parent:'Kouakou Brou',tel:'+225 05 33 44 55',photo:''},
-      {id:'2026004',nom:'BAMBA',prenom:'FATOUMATA',sexe:'F',dob:'2019-09-01',lieu:'Yamoussoukro',classe:'CP1',parent:'Bamba Seydou',tel:'+225 05 44 55 66',photo:''},
+      {id:'2026004',nom:'BAMBA',prenom:'MOUSSO',sexe:'F',dob:'2019-09-01',lieu:'Yamoussoukro',classe:'CP1',parent:'Bamba Seydou',tel:'+225 05 44 55 66',photo:''},
       {id:'2026005',nom:'KONAN',prenom:'YVES MARTIAL',sexe:'M',dob:'2018-02-18',lieu:'Abidjan',classe:'CP2',parent:'Konan Koffi',tel:'+225 07 55 66 77',photo:''},
       {id:'2026006',nom:'DIABATÉ',prenom:'MARIAM',sexe:'F',dob:'2018-06-03',lieu:'Man',classe:'CP2',parent:'Diabaté Moussa',tel:'+225 01 66 77 88',photo:''},
-      {id:'2026007',nom:'TRAORÉ',prenom:'IBRAHIMA',sexe:'M',dob:'2018-11-25',lieu:'Korhogo',classe:'CP2',parent:'Traoré Amadou',tel:'+225 07 77 88 99',photo:''},
+      {id:'2026007',nom:'TOURÉ',prenom:'TENIN',sexe:'M',dob:'2018-11-25',lieu:'Korhogo',classe:'CP2',parent:'Traoré Amadou',tel:'+225 07 77 88 99',photo:''},
       {id:'2026008',nom:"N'GUESSAN",prenom:'ADJOUA BÉNÉDICTE',sexe:'F',dob:'2017-01-14',lieu:'Abidjan',classe:'CE1',parent:"N'Guessan Paul",tel:'+225 07 33 44 55',photo:''},
       {id:'2026009',nom:'KOUASSI',prenom:'ERIC ROLAND',sexe:'M',dob:'2017-04-20',lieu:'Bouaflé',classe:'CE1',parent:'Kouassi Yao',tel:'+225 05 44 55 66',photo:''},
       {id:'2026010',nom:'AKAFFOU',prenom:'PRISCA',sexe:'F',dob:'2017-08-12',lieu:'Abengourou',classe:'CE1',parent:'Akaffou Jean',tel:'+225 07 55 66 77',photo:''},
       {id:'2026011',nom:'KOUASSI',prenom:'ELIZE ORNELLA',sexe:'F',dob:'2016-06-30',lieu:'Yamoussoukro',classe:'CE2',parent:'Kouassi Akossi',tel:'+225 07 44 55 66',photo:''},
       {id:'2026012',nom:'BROU',prenom:'KONAN FABRICE',sexe:'M',dob:'2016-02-11',lieu:'Daoukro',classe:'CE2',parent:'Brou Kouadio',tel:'+225 05 11 22 33',photo:''},
-      {id:'2026013',nom:'OUÉDRAOGO',prenom:'RAÏSSA',sexe:'F',dob:'2015-10-05',lieu:'Bouaké',classe:'CM1',parent:'Ouédraogo Firmin',tel:'+225 07 22 33 44',photo:''},
-      {id:'2026014',nom:'COULIBALY',prenom:'SOULEYMANE',sexe:'M',dob:'2015-03-19',lieu:'Odienné',classe:'CM1',parent:'Coulibaly Drissa',tel:'+225 01 33 44 55',photo:''},
-      {id:'2026015',nom:'YAO',prenom:'JEAN-FOURIER',sexe:'M',dob:'2014-07-08',lieu:'Yamoussoukro',classe:'CM2',parent:'Yao Konan',tel:'+225 07 88 99 00',photo:''},
-      {id:'2026016',nom:'KONÉ',prenom:'AMINATA',sexe:'F',dob:'2014-11-22',lieu:'Daloa',classe:'CM2',parent:'Koné Lassina',tel:'+225 05 99 00 11',photo:''},
+      {id:'2026013',nom:'OUÉDRAOGO',prenom:'RAELLE',sexe:'F',dob:'2015-10-05',lieu:'Bouaké',classe:'CM1',parent:'Ouédraogo Firmin',tel:'+225 07 22 33 44',photo:''},
+      {id:'2026014',nom:'COULIBALY',prenom:'KAFOLO',sexe:'M',dob:'2015-03-19',lieu:'Odienné',classe:'CM1',parent:'Coulibaly Drissa',tel:'+225 01 33 44 55',photo:''},
+      {id:'2026015',nom:'YAO',prenom:'JEAN',sexe:'M',dob:'2014-07-08',lieu:'Yamoussoukro',classe:'CM2',parent:'Yao Konan',tel:'+225 07 88 99 00',photo:''},
+      {id:'2026016',nom:'KONÉ',prenom:'MARIE JULIE',sexe:'F',dob:'2014-11-22',lieu:'Daloa',classe:'CM2',parent:'Koné Lassina',tel:'+225 05 99 00 11',photo:''},
     ];
     notes = {
       '2026001':{c1:[9,8,9,8,9,7,8,7],c2:[9,8,8,9,7,8,7,9,8],c3:[10,9,9,9,9,8,9,9,8]},
